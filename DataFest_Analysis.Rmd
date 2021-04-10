@@ -4,7 +4,7 @@ output: pdf_document
 author: "S^2LZ^2"
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -18,25 +18,305 @@ library(nnet) # for multinomial logistic regression
 
 ## R Markdown
 
-```{r load datasets}
+```{r load-datasets, warning=FALSE, message=FALSE}
 CA <- read_csv("~/df_data/CA/ca.csv")
 DE <- read_csv("~/df_data/DE/de.csv")
 UK <- read_csv("~/df_data/UK/uk.csv")
 US18 <- read_csv("~/df_data/US/us_18.csv")
 US19 <- read_csv("~/df_data/US/us_19.csv")
 
-View(CA)
-View(DE)
-View(UK)
-View(US18)
-View(US19)
+
+US18%>%
+  count(HEALTH_ROLE)
+#BENZ, THC, STIM
+
+
+#BENZ_NUM: 5, 7, 14
+#STIM_USE: 5, 7, 14
 ```
+
+```{r visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among Greeklife Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a THC Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among Greeklife Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Stimulant Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among Greeklife Students")
+
+```
+
+```{r collegeHousing-Drug-Misuse-visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Do you currently live in on-campus housing", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Do you currently live in on-campus housing", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Do you currently live in on-campus housing", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among College Students")
+
+```
+```{r collegeSize-drug-misuse-visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "< 5,000", "1" = "5,000 - 10,000",
+                              "2" = "10,001 - 25,000",
+                            "3" = "> 25,000", 
+                            "4" = "Not Sure", 
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "How Many Students Are Enrolled in Your Current College/University", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "< 5,000", "1" = "5,000 - 10,000",
+                              "2" = "10,001 - 25,000",
+                            "3" = "> 25,000", 
+                            "4" = "Not Sure", 
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "How Many Students Are Enrolled in Your Current College/University", 
+      fill = "Used a THC Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "< 5,000", "1" = "5,000 - 10,000",
+                              "2" = "10,001 - 25,000",
+                            "3" = "> 25,000", 
+                            "4" = "Not Sure", 
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "How Many Students Are Enrolled in Your Current College/University", 
+      fill = "Used a Stimulant Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among College Students")
+
+```
+
+```{r collegeLength-Drug-Misuse-visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a THC Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Stimulant Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among College Students")
+
+```
+
+```{r SchoolTypes-drug-misuse-visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "Public",
+                              "1" = "Private",
+                            "2" = "Other"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "Public",
+                              "1" = "Private",
+                            "2" = "Other"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a THC Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "Public",
+                              "1" = "Private",
+                            "2" = "Other"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Stimulant Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among College Students")
+
+
+```
+
+```{r AreYouInCollege-drug-misuse-visual, warning=FALSE, message=FALSE}
+ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(BENZ_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No",
+                              "1" = "Yes",
+                            "NA" = "Not a Student in the past 3 months"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Student", 
+      fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
+       title = "Proportion of Benzodiazepine Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(THC_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No",
+                              "1" = "Yes",
+                            "NA" = "Not a Student in the past 3 months"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Student", 
+      fill = "Used a THC Without a Doctor’s Prescription ", 
+       title = "Proportion of THC Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(STIM_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No",
+                              "1" = "Yes",
+                            "NA" = "Not a Student in the past 3 months"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Student", 
+      fill = "Used a Stimulant Without a Doctor’s Prescription ", 
+       title = "Proportion of Stimulant Misuse Among College Students")
+
+
+
+```
+
 
 ## Including Plots
 
-You can also embed plots, for example:
-
-```{r , echo=FALSE}
+```{r , echo=FALSE, warning=FALSE, message=FALSE}
 #Check the sums of na in each column for all Data Sets. 
 tidy(colSums(is.na(UK)))
 tidy(colSums(is.na(CA)))
