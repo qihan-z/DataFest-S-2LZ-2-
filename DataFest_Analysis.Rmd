@@ -20,6 +20,16 @@ library(nnet) # for multinomial logistic regression
 
 ```{r load datasets}
 CA <- read_csv("~/df_data/CA/ca.csv")
+DE <- read_csv("~/df_data/DE/de.csv")
+UK <- read_csv("~/df_data/UK/uk.csv")
+US18 <- read_csv("~/df_data/US/us_18.csv")
+US19 <- read_csv("~/df_data/US/us_18.csv")
+
+view(CA)
+view(DE)
+view(UK)
+view(US18)
+view(US19)
 ```
 
 ## Including Plots
