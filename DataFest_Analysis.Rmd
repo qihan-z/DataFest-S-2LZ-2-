@@ -25,11 +25,11 @@ UK <- read_csv("~/df_data/UK/uk.csv")
 US18 <- read_csv("~/df_data/US/us_18.csv")
 US19 <- read_csv("~/df_data/US/us_19.csv")
 
-view(CA)
-view(DE)
-view(UK)
-view(US18)
-view(US19)
+View(CA)
+View(DE)
+View(UK)
+View(US18)
+View(US19)
 ```
 
 ## Including Plots
