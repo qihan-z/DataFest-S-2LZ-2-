@@ -13,6 +13,7 @@ library(tidyverse)
 library(knitr)
 library(broom)
 library(nnet) # for multinomial logistic regression
+library(patchwork)
 ```
 
 
@@ -25,14 +26,6 @@ UK <- read_csv("~/df_data/UK/uk.csv")
 US18 <- read_csv("~/df_data/US/us_18.csv")
 US19 <- read_csv("~/df_data/US/us_19.csv")
 
-
-US18%>%
-  count(HEALTH_ROLE)
-#BENZ, THC, STIM
-
-
-#BENZ_NUM: 5, 7, 14
-#STIM_USE: 5, 7, 14
 ```
 
 ## Including Plots
@@ -216,7 +209,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(BENZ_NMU)))+
                             "NA" = "Not A Student"))+
   theme_classic() +
  labs(y = "Proportion", 
-       x = "How Many Students Are Enrolled in Your Current College/University", 
+       x = "Your School Size", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
 
@@ -232,7 +225,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(THC_NMU)))+
                             "NA" = "Not A Student"))+
   theme_classic() +
  labs(y = "Proportion", 
-       x = "How Many Students Are Enrolled in Your Current College/University", 
+       x = "Your School Sizey", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
 
@@ -248,7 +241,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(STIM_NMU)))+
                             "NA" = "Not A Student"))+
   theme_classic() +
  labs(y = "Proportion", 
-       x = "How Many Students Are Enrolled in Your Current College/University", 
+       x = "Your School Size", 
       fill = "Used a Stimulant Without a Doctor’s Prescription ", 
        title = "Proportion of Stimulant Misuse Among College Students")
 
@@ -331,3 +324,226 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(STIM_NMU)))+
        title = "Proportion of Stimulant Misuse Among Greeklife Students")
 
 ```
+
+factor(FENT_NMU,
+    BUP_NMU,
+    METH_NMU,
+    MORPH_NMU,
+    OXY_NMU,
+    OXYM_NMU,
+    TRAM_NMU,
+    TAP_NMU, 
+    HYD_NMU, 
+    HYDM_NMU,
+    SUF_NMU, 
+    COD_NMU, 
+    DIHY_NMU 
+    )
+
+### Which of Pain Relief Med Has Been Misused the Most?
+
+
+```{r}
+US18%>%
+  count("FENT_NMU")
+
+US18%>%
+  count("BUP_NMU")
+
+US18%>%
+  count("METH_NMU")
+
+US18%>%
+  count("MORPH_NMU")
+
+US18%>%
+  count("OXY_NMU")
+
+US18%>%
+  count("OXYM_NMU")
+
+US18%>%
+  count(
+    "TRAM_NMU")
+
+US18%>%
+  count(
+    "TAP_NMU")
+
+US18%>%
+  count(
+    "HYD_NMU")
+
+US18%>%
+  count(
+    "HYDM_NMU")
+
+US18%>%
+  count(
+    "SUF_NMU")
+
+US18%>%
+  count( 
+    "COD_NMU")
+
+US18%>%
+  count(
+    "DIHY_NMU")
+
+```
+The medication that has the greatest number of 1s is Hydrocodone (HYD_NMU.)
+```{r}
+ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No",
+                              "1" = "Yes",
+                            "NA" = "Not a Student in the past 3 months"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Student", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
+###############################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "Public",
+                              "1" = "Private",
+                            "2" = "Other"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+#############################################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "Public",
+                              "1" = "Private",
+                            "2" = "Other"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+####################################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+#############################################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "< 5,000", "1" = "5,000 - 10,000",
+                              "2" = "10,001 - 25,000",
+                            "3" = "> 25,000", 
+                            "4" = "Not Sure", 
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Your School Size", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+#############################################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Do you currently live in on-campus housing", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+#############################################
+
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
+
+```
+
+Among all three drug classes plus Hydrocodone, trade school unvariably have the
+highest proportion of people who reported that they had used a prescription 
+medication without Doctor's prescription.
+
+### Why?
+```{r}
+#I didn't leave every graph in, but Trade school has pretty much the highest proportion for 68-71
+ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HPC_SELL)))+
+  geom_bar(position = "fill")+
+  coord_flip()+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "School Types", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among College Students")
+```
+
+
+###Which group of people has the highest likelihood to have drug misuses?
+
+
+###Which group of people are more likely to seek for help for drug misuses?
+
+
+
