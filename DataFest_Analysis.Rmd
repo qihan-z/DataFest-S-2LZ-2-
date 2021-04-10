@@ -23,7 +23,7 @@ CA <- read_csv("~/df_data/CA/ca.csv")
 DE <- read_csv("~/df_data/DE/de.csv")
 UK <- read_csv("~/df_data/UK/uk.csv")
 US18 <- read_csv("~/df_data/US/us_18.csv")
-US19 <- read_csv("~/df_data/US/us_18.csv")
+US19 <- read_csv("~/df_data/US/us_19.csv")
 
 view(CA)
 view(DE)
@@ -36,8 +36,16 @@ view(US19)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r , echo=FALSE}
+#Check the sums of na in each column for all Data Sets. 
+tidy(colSums(is.na(UK)))
+tidy(colSums(is.na(CA)))
+tidy(colSums(is.na(US18)))
+tidy(colSums(is.na(US19)/nrow(US19)))
+tidy(colSums(is.na(US19)))
+tidy(colSums(is.na(DE)))
+  
+  
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
