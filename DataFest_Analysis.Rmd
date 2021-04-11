@@ -821,13 +821,14 @@ not_full_model <- glm(HYD_NMU ~ factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor
 
 greek_model <- glm(HYD_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE), data = students_US, family = binomial)
 
-tidy(anova(not_full_model, greek_model, test = "Chisq"))
-
+tidy(anova(not_full_model, greek_model, test = "Chisq"))%>%
+    kable(digits=3, caption = "Drop-in-deviance test for Greek Life")
 ```
 
 ```{r why college length not significant }
 
-tidy(anova(greek_model, model_initial_HYD, test = "Chisq"))
+tidy(anova(greek_model, model_initial_HYD, test = "Chisq"))%>%
+    kable(digits=3, caption = "Drop-in-deviance test for College_length")
 ```
 
 
