@@ -443,7 +443,8 @@ ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(HYD_NMU)))+
   theme_classic() +
  labs(y = "Proportion", 
        x = "Are You A Student", 
-      fill = "Used a Hydrocodone \nWithout a Doctor’s Prescription ", 
+      fill = "Used a Hydrocodone \n
+      Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 ```
 
