@@ -660,9 +660,10 @@ ggplot(data = US18, aes(x = factor(DEM_EDU), fill = factor(HELP_SUB_USE)))+
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90)) + 
   labs(y = "Proportion", 
-       x = "Education Level", 
+       x = "Educational Level", 
        fill = "Whether seek help",
-       title = "Proportion of people who have sought professional help \nfor substance abuse by education level")
+       title = "Proportion of People who have Sought \nProfessional Help for Substance Abuse",
+    subtitle = "Grouped by Educational Level")
 ```
 
 Students in trade school have a relatively higher proportion of seeking professional help for substance abuse.
@@ -681,7 +682,8 @@ scale_x_discrete(labels=c("0" = "Public",
   labs(y = "Proportion", 
        x = "College Type", 
        fill = "Whether seek help",
-       title = "Proportion of college students who have sought professional help \nfor substance abuse by college type")
+       title = "Proportion of College Students who have Sought \nProfessional Help for Substance Abuse",
+       subtitle = "Grouped by College Type")
 ```
 Students in private colleges have a higher proportion of seeking professional help for substance abuse.
 
@@ -699,9 +701,10 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_SIZE), fill = factor(HELP_SUB_
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90)) + 
   labs(y = "Proportion", 
-       x = "College size", 
+       x = "College Size", 
        fill = "Whether seek help",
-       title = "Proportion of college students who have sought professional help \nfor substance abuse by college size")
+       title = "Proportion of College Students who have Sought \nProfessional Help for Substance Abuse",
+       subtitle = "Grouped by College Size")
 ```
 Students with a college size over 25,000 have a higher proportion of seeking professional help for substance abuse.
 
@@ -720,9 +723,10 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_LENGTH), fill = factor(HELP_SU
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90)) + 
   labs(y = "Proportion", 
-       x = "College length", 
+       x = "College Length", 
        fill = "Whether seek help",
-       title = "Proportion of college students who have sought professional help \nfor substance abuse by college length")
+       title = "Proportion of College Students who have Sought \nProfessional Help for Substance Abuse",
+       subtitle = "Groupbed by College Length")
 ```
 
 Students who are current in college school have a higher proportion of seeking professional help for substance abuse.
@@ -738,9 +742,10 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_GREEK), fill = factor(HELP_SUB
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90)) + 
   labs(y = "Proportion", 
-       x = "Are You A Member of A College Greeklife Organization", 
+       x = "Are You a Member of a$ College Greeklife Organization", 
        fill = "Whether seek help",
-       title = "Proportion of college students who have sought professional help \nfor substance abuse by Greek Life")
+       title = "Proportion of College Students who have Sought \nProfessional Help for Substance Abuse",
+       subtitle = "Grouped by Students' Greeklife Affiliation")
 
 ```
 Students who are in Greek life have a higher proportion of seeking professional help for substance abuse.
