@@ -811,11 +811,18 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HPC_SELL)))+
 ```
 
 
+```{r why Greek life significant}
+not_full_model <- glm(HYD_NMU ~ factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE), data = students_US, family = binomial)
+
+greek_model <- glm(HYD_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE), data = students_US, family = binomial)
+
+tidy(anova(not_full_model, greek_model, test = "Chisq"))
+
+```
+
 ```{r why college length not significant }
-collegelength_exam_HYD <- glm(HYD_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
-                     data = students_US,
-                     family = binomial)
-tidy(anova(collegelength_exam_HYD, model_initial_HYD, test = "Chisq"))
+
+tidy(anova(greek_model, model_initial_HYD, test = "Chisq"))
 ```
 
 
