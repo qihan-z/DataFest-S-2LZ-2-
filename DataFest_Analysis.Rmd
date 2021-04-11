@@ -812,7 +812,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HPC_SELL)))+
  labs(y = "Proportion", 
        x = "Are You A Member of A College Greeklife Organization", 
       fill = "Know a Healthcare Collegue that Intended to Sell", 
-       title = "Proportion of Greeklife Students that Know a Healthcare Collegue Intending to Sell")
+       title = "Proportion of Greeklife Students that \nKnow a Healthcare Collegue Intending to Sell")
 ```
 
 
