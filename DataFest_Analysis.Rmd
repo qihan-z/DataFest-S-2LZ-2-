@@ -20,11 +20,11 @@ library(patchwork)
 ## R Markdown
 
 ```{r load-datasets, warning=FALSE, message=FALSE}
-CA <- read_csv("~/df_data/CA/ca.csv")
-DE <- read_csv("~/df_data/DE/de.csv")
-UK <- read_csv("~/df_data/UK/uk.csv")
-US18 <- read_csv("~/df_data/US/us_18.csv")
-US19 <- read_csv("~/df_data/US/us_19.csv")
+# CA <- read_csv("~/df_data/CA/ca.csv")
+# DE <- read_csv("~/df_data/DE/de.csv")
+# UK <- read_csv("~/df_data/UK/uk.csv")
+US18 <- read.csv("~/df_data/US/us_18.csv", na.strings=c(""))
+# US19 <- read_csv("~/df_data/US/us_19.csv")
 
 ```
 
@@ -38,34 +38,34 @@ tidy(colSums(is.na(US18)))
 tidy(colSums(is.na(US19)/nrow(US19)))
 tidy(colSums(is.na(US19)))
 tidy(colSums(is.na(DE)))
-  
-  
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
-
-```{r AreYouInCollege-drug-misuse-visual, warning=FALSE, message=FALSE}
+```{r AreYouInCollege-drug-misuse-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
   scale_fill_discrete(labels = c("No",  "Yes", 
                                   "Never Used")) +
   scale_x_discrete(labels=c("0" = "No",
-                              "1" = "Yes",
+                            "1" = "Yes",
                             "NA" = "Not a Student in the past 3 months"))+
   theme_classic() +
- labs(y = "Proportion", 
+  labs(y = "Proportion", 
        x = "Are You A Student", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
+```
 
+
+```{r AreYouInCollege-drug-misuse-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
   scale_fill_discrete(labels = c("No",  "Yes", 
-                                  "Never Used")) +
+                                "Never Used")) +
   scale_x_discrete(labels=c("0" = "No",
                               "1" = "Yes",
                             "NA" = "Not a Student in the past 3 months"))+
@@ -74,7 +74,10 @@ ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(THC_NMU)))+
        x = "Are You A Student", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
+```
 
+
+```{r AreYouInCollege-drug-misuse-visual-STIM, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -93,7 +96,7 @@ ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(STIM_NMU)))+
 
 ```
 
-```{r SchoolTypes-drug-misuse-visual, warning=FALSE, message=FALSE}
+```{r SchoolTypes-drug-misuse-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -107,7 +110,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(BENZ_NMU)))+
        x = "School Types", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
+```
 
+
+```{r SchoolTypes-drug-misuse-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -121,7 +127,11 @@ ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(THC_NMU)))+
        x = "School Types", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
+```
+Students who identify as enrolled in "other" type of schools has a higher proportion
+of using a THC without a doctor's prescription.
 
+```{r SchoolTypes-drug-misuse-visual-STIM, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -139,7 +149,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(STIM_NMU)))+
 
 ```
 
-```{r collegeLength-Drug-Misuse-visual, warning=FALSE, message=FALSE}
+```{r collegeLength-Drug-Misuse-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -154,10 +164,14 @@ ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(BENZ_NMU)))+
                             "NA" = "Not A Student"))+
   theme_classic() +
  labs(y = "Proportion", 
-       x = "School Types", 
+       x = "College length", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
+```
+Trade school and other (?) has a higher proportion of students using Benzodiazepine
+without a doctors' prescription.
 
+```{r collegeLength-Drug-Misuse-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -175,7 +189,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(THC_NMU)))+
        x = "School Types", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
+```
 
+
+```{r collegeLength-Drug-Misuse-visual-STIM, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -195,8 +212,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(STIM_NMU)))+
        title = "Proportion of Stimulant Misuse Among College Students")
 
 ```
+Trade school students as a higher proportion of students using a stimulant
+without a doctors' prescription.
 
-```{r collegeSize-drug-misuse-visual, warning=FALSE, message=FALSE}
+```{r collegeSize-drug-misuse-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -212,7 +231,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(BENZ_NMU)))+
        x = "Your School Size", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
+```
 
+
+```{r collegeSize-drug-misuse-visualTHC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -228,7 +250,11 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(THC_NMU)))+
        x = "Your School Sizey", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
+```
+Students who enrolled in a school of size >25,000 has a higher proportion of using
+a THC without a doctor's prescription.
 
+```{r collegeSize-drug-misuse-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -246,8 +272,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(STIM_NMU)))+
        title = "Proportion of Stimulant Misuse Among College Students")
 
 ```
+Students who enrolled in a school of size >25,000 has a higher proportion of using
+a stimulant without a doctor's prescription.
 
-```{r collegeHousing-Drug-Misuse-visual, warning=FALSE, message=FALSE}
+```{r collegeHousing-Drug-Misuse-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -259,7 +287,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(BENZ_NMU)))+
        x = "Do you currently live in on-campus housing", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among College Students")
+```
 
+
+```{r collegeHousing-Drug-Misuse-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -271,7 +302,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(THC_NMU)))+
        x = "Do you currently live in on-campus housing", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among College Students")
+```
 
+
+```{r collegeHousing-Drug-Misuse-visual-STIM, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -286,7 +320,7 @@ ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(STIM_NMU)))+
 
 ```
 
-```{r visual, warning=FALSE, message=FALSE}
+```{r collegeGREEK-visual-BENZ, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(BENZ_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -298,7 +332,11 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(BENZ_NMU)))+
        x = "Are You A Member of A College Greeklife Organization", 
       fill = "Used a Benzodiazepine Without a Doctor’s Prescription ", 
        title = "Proportion of Benzodiazepine Misuse Among Greeklife Students")
+```
+Students in greeklife has a higher proportion of using benzo w/o doctor's 
+prescription.
 
+```{r collegeGREEK-visual-THC, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(THC_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -310,7 +348,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(THC_NMU)))+
        x = "Are You A Member of A College Greeklife Organization", 
       fill = "Used a THC Without a Doctor’s Prescription ", 
        title = "Proportion of THC Misuse Among Greeklife Students")
+```
 
+
+```{r collegeGREEK-visual-STIM, warning=FALSE, message=FALSE}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(STIM_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -392,6 +433,7 @@ US18%>%
 
 ```
 The medication that has the greatest number of 1s is Hydrocodone (HYD_NMU.)
+
 ```{r}
 ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
@@ -406,7 +448,10 @@ ggplot(data = US18, aes(x = factor(DEM_COLLEGE), fill = factor(HYD_NMU)))+
        x = "Are You A Student", 
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
+```
 
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -419,7 +464,11 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
 ###############################
+```
+A higher proportion of Greeklife member report to have used hydrocodone w/o a 
+doctor's prescription.
 
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -434,7 +483,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 #############################################
+```
 
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -449,7 +501,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_TYPE), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 ####################################
+```
 
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -468,7 +523,12 @@ ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 #############################################
+```
 
+A higher proportion of trade school student report to have used hydrocodone w/o a 
+doctor's prescription.
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -485,7 +545,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_SIZE), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 #############################################
+```
 
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -498,7 +561,10 @@ ggplot(data = US18, aes(x = factor(COLLEGE_HOUSING), fill = factor(HYD_NMU)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among College Students")
 #############################################
+```
 
+
+```{r}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
   geom_bar(position = "fill")+
   scale_fill_discrete(labels = c("No",  "Yes", 
@@ -512,14 +578,17 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HYD_NMU)))+
        title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
 
 ```
+Students in greeklife has a higher proportion of using hydrocodone w/o doctor's 
+prescription.
 
-Among all three drug classes plus Hydrocodone, trade school unvariably have the
+Among all three drug classes plus Hydrocodone, trade school univariably have the
 highest proportion of people who reported that they had used a prescription 
 medication without Doctor's prescription.
 
 ### Why?
 ```{r}
-#I didn't leave every graph in, but Trade school has pretty much the highest proportion for 68-71
+# I didn't leave every graph in, but Trade school has pretty much the highest
+# proportion for 68-71
 ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HPC_SELL)))+
   geom_bar(position = "fill")+
   coord_flip()+
@@ -536,14 +605,147 @@ ggplot(data = US18, aes(x = factor(COLLEGE_LENGTH), fill = factor(HPC_SELL)))+
  labs(y = "Proportion", 
        x = "School Types", 
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
-       title = "Proportion of Hydrocodone Misuse Among College Students")
+       title = "Proportion of students who know of a healthcae professional colleague who took a controlled substance from the workpalce with the intent to sell")
+```
+A higher proportion of trade school students know of a healthcare professional 
+colleague who took a controlled substance from the workplace with the intent to sell.
+
+```{r regression model-THC}
+students_US <- US18 %>% 
+  filter(DEM_COLLEGE == 1)
+
+model_initial_THC <- glm(THC_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_LENGTH) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
+                     data = students_US,
+                     family = binomial)
+tidy(model_initial_THC)
+# backward_aic <- step(model_initial_THC) - error
 ```
 
+```{r regression model-BENZ}
+students_US <- US18 %>% 
+  filter(DEM_COLLEGE == 1)
+
+model_initial_BENZ <- glm(BENZ_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_LENGTH) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
+                     data = students_US,
+                     family = binomial)
+tidy(model_initial_BENZ)
+backward_aic <- step(model_initial_BENZ)
+```
+HPC_SELL, \*COLLEGE_LENGTH (p-value big), COLLEGE_TYPE, COLLEGE_SIZE are significant 
+predictors for benzo misuse.
+
+```{r regression model-STIM}
+students_US <- US18 %>% 
+  filter(DEM_COLLEGE == 1)
+
+model_initial_STIM <- glm(STIM_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_LENGTH) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
+                     data = students_US,
+                     family = binomial)
+tidy(model_initial_STIM)
+# backward_aic <- step(model_initial_STIM) - error
+```
+```{r regression model-HYD}
+students_US <- US18 %>% 
+  filter(DEM_COLLEGE == 1)
+
+model_initial_HYD <- glm(HYD_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_LENGTH) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
+                     data = students_US,
+                     family = binomial)
+tidy(model_initial_HYD)
+backward_aic <- step(model_initial_HYD) 
+```
+
+COLLEGE_GREEK, \*HPC_SEL(p-value big), and \*COLLEGE_SIZE (p-value big) are significant predictors for hydrocodone misuse.
+
+\textbf{Maybe look at interaction between COLLEGE_TYPE and HPC_SELL}
 
 ###Which group of people has the highest likelihood to have drug misuses?
 
-
 ###Which group of people are more likely to seek for help for drug misuses?
+```{r SeekHelp-Education Level}
+ggplot(data = US18, aes(x = factor(DEM_EDU), fill = factor(HELP_SUB_USE)))+
+  geom_bar(position = "fill") +
+  coord_flip() + 
+  scale_fill_discrete(labels = c("No", "Yes")) +
+  scale_x_discrete(labels=c("1" = "Less than a year high school diploma",
+                            "2" = "Regular high school/GED/Alt",
+                            "3" = "Some college credit but no degree", 
+                            "4" = "Trade school", 
+                            "5" = "Associate degree", 
+                            "6" = "Bachelors degree",
+                            "7" = "Masters degree",
+                            "8" = "Doctoral degree"))+
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  labs(y = "Proportion", 
+       x = "Education level", 
+       title = "Proportion of people who have sought professional help for substance abuse by education level")
+```
+```{r SeekHelp-Education Level}
+ggplot(data = students_US, aes(x = factor(COLLEGE_TYPE), fill = factor(HELP_SUB_USE)))+
+  geom_bar(position = "fill") +
+  coord_flip() + 
+  scale_fill_discrete(labels = c("No", "Yes")) +
+scale_x_discrete(labels=c("0" = "Public",
+                          "1" = "Private",
+                          "2" = "Other")) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  labs(y = "Proportion", 
+       x = "College type", 
+       title = "Proportion of college students who have sought professional help for substance abuse by college type")
+```
+```{r}
+ggplot(data = students_US, aes(x = factor(COLLEGE_SIZE), fill = factor(HELP_SUB_USE)))+
+  geom_bar(position = "fill") +
+  coord_flip() + 
+  scale_fill_discrete(labels = c("No", "Yes")) +
+  scale_x_discrete(labels=c("0" = "< 5,000", "1" = "5,000 - 10,000",
+                              "2" = "10,001 - 25,000",
+                            "3" = "> 25,000", 
+                            "4" = "Not Sure", 
+                            "NA" = "Not A Student"))+
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  labs(y = "Proportion", 
+       x = "College size", 
+       title = "Proportion of college students who have sought professional help for substance abuse by college size")
+```
+```{r}
+ggplot(data = students_US, aes(x = factor(COLLEGE_LENGTH), fill = factor(HELP_SUB_USE)))+
+  geom_bar(position = "fill") +
+  coord_flip() + 
+  scale_fill_discrete(labels = c("No", "Yes")) +
+  scale_x_discrete(labels=c("1" = "2 Years College/Uni",
+                              "2" = "4 Years College/Uni",
+                            "3" = "Graduate School ", 
+                            "4" = "Online School", 
+                            "5" = "Trade School", 
+                            "6" = "Other",
+                            "NA" = "Not A Student")) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  labs(y = "Proportion", 
+       x = "College length", 
+       title = "Proportion of college students who have sought professional help for substance abuse by college length")
+```
+
+```{r}
+ggplot(data = students_US, aes(x = factor(COLLEGE_GREEK), fill = factor(HELP_SUB_USE)))+
+  geom_bar(position = "fill") +
+  coord_flip() + 
+  scale_fill_discrete(labels = c("No", "Yes")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student")) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90)) + 
+  labs(y = "Proportion", 
+       x = "College length", 
+       title = "Proportion of college students who have sought professional help for substance abuse by college length")
+
+```
+
+
 
 
 
