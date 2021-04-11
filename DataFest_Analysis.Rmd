@@ -746,6 +746,59 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_GREEK), fill = factor(HELP_SUB
 ```
 
 
+```{r q68 greek}
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(DRSHOP_USE)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
 
+```
 
+```{r greek q69}
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(DRSHOP_SELL)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
+```
+
+```{r q69 greek}
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HPC_USE)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
+```
+```{r}
+ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HPC_SELL)))+
+  geom_bar(position = "fill")+
+  scale_fill_discrete(labels = c("No",  "Yes", 
+                                  "Never Used")) +
+  scale_x_discrete(labels=c("0" = "No", "1" = "Yes",
+                              "NA" = "Not A Student"))+
+  theme_classic() +
+ labs(y = "Proportion", 
+       x = "Are You A Member of A College Greeklife Organization", 
+      fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
+       title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
+```
 
