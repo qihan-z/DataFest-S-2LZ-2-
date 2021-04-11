@@ -661,7 +661,10 @@ COLLEGE_GREEK, \*HPC_SEL(p-value big), and \*COLLEGE_SIZE (p-value big) are sign
 
 ###Which group of people has the highest likelihood to have drug misuses?
 
-###Which group of people are more likely to seek for help for drug misuses?
+### Question 3
+
+##Which group of US college students are more likely to seek help for drug misuses?
+
 ```{r SeekHelp-Education Level}
 ggplot(data = US18, aes(x = factor(DEM_EDU), fill = factor(HELP_SUB_USE)))+
   geom_bar(position = "fill") +
@@ -681,6 +684,10 @@ ggplot(data = US18, aes(x = factor(DEM_EDU), fill = factor(HELP_SUB_USE)))+
        x = "Education level", 
        title = "Proportion of people who have sought professional help for substance abuse by education level")
 ```
+
+Students in trade school have a relatively higher proportion of seeking professional help for substance abuse.
+
+
 ```{r SeekHelp-Education Level}
 ggplot(data = students_US, aes(x = factor(COLLEGE_TYPE), fill = factor(HELP_SUB_USE)))+
   geom_bar(position = "fill") +
@@ -695,6 +702,9 @@ scale_x_discrete(labels=c("0" = "Public",
        x = "College type", 
        title = "Proportion of college students who have sought professional help for substance abuse by college type")
 ```
+Students in private colleges have a higher proportion of seeking professional help for substance abuse.
+
+
 ```{r}
 ggplot(data = students_US, aes(x = factor(COLLEGE_SIZE), fill = factor(HELP_SUB_USE)))+
   geom_bar(position = "fill") +
@@ -711,6 +721,8 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_SIZE), fill = factor(HELP_SUB_
        x = "College size", 
        title = "Proportion of college students who have sought professional help for substance abuse by college size")
 ```
+Students with a college size over 25,000 have a higher proportion of seeking professional help for substance abuse.
+
 ```{r}
 ggplot(data = students_US, aes(x = factor(COLLEGE_LENGTH), fill = factor(HELP_SUB_USE)))+
   geom_bar(position = "fill") +
@@ -730,6 +742,9 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_LENGTH), fill = factor(HELP_SU
        title = "Proportion of college students who have sought professional help for substance abuse by college length")
 ```
 
+Students who are current in college school have a higher proportion of seeking professional help for substance abuse.
+
+
 ```{r}
 ggplot(data = students_US, aes(x = factor(COLLEGE_GREEK), fill = factor(HELP_SUB_USE)))+
   geom_bar(position = "fill") +
@@ -744,7 +759,13 @@ ggplot(data = students_US, aes(x = factor(COLLEGE_GREEK), fill = factor(HELP_SUB
        title = "Proportion of college students who have sought professional help for substance abuse by college length")
 
 ```
+Students who are in Greek life have a higher proportion of seeking professional help for substance abuse.
 
+
+
+### Question 2
+
+##Why are US college students in fraternity/sorority more likely to have drug misuses?
 
 ```{r q68 greek}
 ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(DRSHOP_USE)))+
@@ -801,4 +822,15 @@ ggplot(data = US18, aes(x = factor(COLLEGE_GREEK), fill = factor(HPC_SELL)))+
       fill = "Used a Hydrocodone Without a Doctor’s Prescription ", 
        title = "Proportion of Hydrocodone Misuse Among Greeklife Students")
 ```
+
+
+```{r why college length not significant }
+collegelength_exam_HYD <- glm(HYD_NMU ~ factor(COLLEGE_GREEK) + factor(HPC_SELL) + factor(COLLEGE_TYPE) + factor(COLLEGE_SIZE),
+                     data = students_US,
+                     family = binomial)
+tidy(anova(collegelength_exam_HYD, model_initial_HYD, test = "Chisq"))
+
+
+```
+
 
